@@ -396,7 +396,7 @@ void algorithm(int argc, char **argv) {
   //
   OptStruct owin   =  {"w:", 8, "8", NULL, "Block side"};
   options.push_back(&owin);
-  OptStruct opercentile = {"p:", 0.005, "0.005", NULL, "Percentile"};
+  OptStruct opercentile = {"p:", -3, "0.005", NULL, "Percentile"};
   options.push_back(&opercentile);
   OptStruct ore = {"r", 0, NULL, NULL, "Flag to remove equal pixels"};
   options.push_back(&ore);  
