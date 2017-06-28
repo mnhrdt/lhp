@@ -31,7 +31,7 @@
 /* Corrects the 'centering bug' discovered by Nicola. In the second step, basic
  * and noisy patches are centered using the basic baricenter. If left undefined,
  * each set of patches (noisy and basic) are centered using their own baricenter. */
-//#define BARICENTER_BASIC
+#define BARICENTER_BASIC
 
 /* Select a variance estimation method.
  *
@@ -77,6 +77,8 @@
  * the one which uses the basic baricenter in the second step (and does nothing
  * in the first step)*/
 //#define FAT_ORIGINAL
+
+#define L1DISTANCE
 
 
 #include "../Utilities/LibVideoT.hpp"
