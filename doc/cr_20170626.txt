@@ -1,0 +1,80 @@
+Compte-rendu et commentaires sur la réunion de lundi avec L'Heritier,
+(surtout pour informer Pablo)
+
+
+
+SITE: LHERITIER à Cergy, lundi 26 juin 2017
+
+
+PEOPLE: LH (Patrice Menard, Boris Gaillard), LIP6 (Lionel Lacassagne,
+Andrea Petreto, Quentin Meunier), CMLA (Jean-Michel, Jérémy, Thibaud,
+Enric, Javier)
+
+
+SUMMARY
+
+1. LH shows the two instruments that they used for the videos that
+they sent us.  The first instrument is a big green apparatus with a
+huge objective (about 10cm), with passive and active acquisition
+modes.  The active acquisition uses an infrared laser synchronized
+with a high-precision shutter that allows to see only the objects
+that occur on a user-selected interval of distances.  The first
+instrument is 5 years old, and LH is working to replace it with new
+technology. For the second instrument, they only show us the captor,
+that is much smaller than the other one and it has arguably better
+properties.  The optics for this new instrument will be also smaller
+and lighter.  We take a first look at the Eiffel tower using the
+green instrument.
+
+2. LIP6 explains that they have implemented the Horn-Schunck IPOL
+code into FPGA, and experimented with different levels of precision
+(using floats of size 32, 16, 11, 10, 9, 8 bits).  For that, they use
+the software MPFR, which is a floating-point valgrind of sorts that
+evaluates the numerical precision loss at each part of your program.
+I do not recall precisely the conclusion of these experiences, but it
+seemed to me that 16bits was a reasonable compromise.  They will look
+next at the TVL1 code, which is a bit more complicated.
+
+3. The pipeline of collaboration seems to be the following triangle
+	- LH proposes image processing problems that they want to solve.
+	- The CMLA gives algorithms to solve these problems via IPOL articles
+	- The LIP6 implements these algorithms into FPGA
+	- The FPGA codes are directly useful to LH
+Thus, the CMLA interacts with LH to evaluate the quality of the
+algorithms on their data, and it interacts with LIP6 to aid the FPGA
+implementation.
+
+4. LIP6 says that IPOL codes in C are very convenient to rewrite in
+FPGA, even without a complete understanding of the algorithm (as I
+see it, this is mostly thanks to the clever IPOL software guidelines
+proposed by Nicolas Limare in 2011).  Lionel explains that some
+"optimizations" of C code are useless to them, for example,
+processing first the interior of the image, then the two horizontal
+sides, then vertical sides, then the four corners.  Some C++ codes
+with hidden cleverness may seem to be slightly more inconvenient to
+rewrite in FPGA.
+
+5. LIP6 explains what is important for an efficient FPGA
+implementation.  More than running time, what is important is the
+regularity of the algorithm.  For example, it is faster to process
+all neighboring patches with exactly the same algorithm, than to
+select a list of patches and process only those (I am not sure I
+understood the reasons for this... it seems to me that if the list of
+patches to process is very small, it should be faster anyway).
+
+6. A sentence I wrote down: computing the SVD of a 400x400 matrix in
+FPGA is a colossal task, and very ill conditioned.
+
+7. Another sentence: it is important to minimize the total number of
+temporary images used by the algorithm.  The ideal case is an
+algorithm that treats an image in-place, without need for further
+memory.
+
+8. Note on the input videos that we have: the "gain" and the "stops"
+of each image are encoded in the filenames.  For example, the number
+that follows "G"
+
+
+
+
+# vim:set tw=69 filetype=text spell spelllang=en:
